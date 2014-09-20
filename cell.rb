@@ -6,6 +6,7 @@ class Cell
     self.pos = pos
     self.state = state
     self.board = board
+    self.next_state = :dead
   end
   
   def update_state
@@ -19,6 +20,7 @@ class Cell
   def get_next_state
     neighbors = self.neighbors
     alive = 0
+    
     self.neighbors.each do |cell|
       alive += 1 if cell.state == :alive
     end
@@ -27,7 +29,16 @@ class Cell
       self.next_state = :alive if alive == 2 || alive == 3
       self.next_state = :dead if alive > 3
     end
-    self.next_state = :alive if self.state == :dead && alive == 3
+    self.next_state = :alive if (self.state == :dead && alive == 3)
   end
+  
+  def inspect
+    "#{self.state} cell at #{self.pos}"
+  end
+  
+  def to_s
+    "#{self.state} cell at #{self.pos}"
+  end
+  
   
 end
